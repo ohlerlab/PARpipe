@@ -1,0 +1,77 @@
+PARpipe is a complete analysis pipeline for PAR-CLIP data providing the following features:
+    Pre-processing and alignment of reads
+    Definition of interaction sites using PARalyzer v1.5 (download)
+    Additional site-level metrics
+    Annotation of reads, groups, and cluster
+    Meta-analysis of binding sites relative to important transcript features
+
+PARpipe has the following software dependencies (bpipe, bedtools, samtools, cutadapt, and bowtie (not bowtie2), perl, R, java).
+-Users can either add the executable to their path or specify the path at the top of the parpipe.sh script.
+-You may need to modify the adapter sequence in parclip_pipe.sh appropriately
+-We have a wrapper file to specify this on the fly - let me know if it woks for you (it is called wrap.pl)
+-The necessary R and perl libraries that come packaged with PARpipe. Though one would need to modify the PERL5LIB path appropriately if the needed libraries are not already installed.
+It has been tested on linux systems. There may be difficulties on mac os/x.
+
+
+QUICK START (in this case it will be installed in the home directory)
+
+cd
+
+git clone https://github.com/ohlerlab/PARpipe.git
+
+# All the scripts and libraries are in the PARpipe/scripts/ directory
+cd PARpipe
+
+# If you want to download all necessary files for analysis of human -hg19 and/or mouse -mm10 data (this is all we support at the moment)
+bash setup.sh -s <h|m|hm>
+# h = human, m = mouse, hm = human and mouse
+
+# To test PARpipe, go to the PARpipe/test directory
+cd test
+bpipe run -r ../parclip_pipe.sh RBPofInterest.fastq
+#to remove unnecessary intermediates:
+bpipe preserve *.csv *.bed *.distribution *.bam *.bam.bai *.clusters.txt *ini *pdf
+bpipe cleanup -y
+
+
+Input file:
+.fastq: this should be a demultiplexed PAR-CLIP library
+
+Output Files:
+.bam: compressed sam file with genomic alignments
+.bam.bai: sorted bam indices
+.clusters.bed: bed file of cluster locations
+.clusters.csv: statistics for each found cluster
+.clusters.txt: summary information for reads, groups clusters, and initial processing
+.distribution: for each cluster, gives nucleotide-resolution information on T-to-C conversion signal, background, and percent, and read count
+.fastq.processing: cutadapt output of filtering information
+.gene_cl/gr.csv: gene-level information by cluster/group
+.groups.csv: statistics for each found group
+.ini: PARalyzer utilized parameters
+Spatial.pdf files: pdf outputs representing binding behavior by annotation category
+
+Output Statistics in groups/clusters.csv files:
+Aligned to: annotation category
+ID: IDs specific to each read/group/cluster
+ModeLocation: location with the most T-to-C conversions
+ModeScore: for above location, score of signal to background
+ConversionLocationCount: number of different location in the sequence with T-to-C conversions
+ConversionEventCount: number T-to-C conversions
+NonConversionEventCount: number of Ts that did not convert to Cs
+T2Cfraction: number of reads with T-to-C conversions / number of reads
+ConversionSpecificity: log(number of reads with T-to-C conversions / number of reads with other conversions)
+endG_fraction: fraction of reads that ended in G
+RedundantSeqFraction: fraction of distinct reads with more than one copy
+RedundantCopyFraction: fraction of all reads with more than one copy
+UniqueReads: number of reads that have only one copy
+None: number of reads with no conversions
+Other_1: number of reads with a non-T-to-C conversion
+T2C_1: number of reads with a T-to-C conversion
+Link: chromosome and coordinates for easy entrance in visualization programs
+
+Output Statistics in .gene_cl/gr.csv files:
+Sum: sum of that statistic over all sites for that gene
+Med: median of that statistic for all sites for that gene
+5'utr/Intron/Exon/3'utr/Start_codon/Stop_codon: number of sites mapping to that annotation category
+Junction: number of sites mapping to a junction between categories (coding-intron, coding-3'utr, etc.)
+GeneType: as described in the gene_type category for this gene in the .gtf file used
