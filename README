@@ -5,10 +5,17 @@ PARpipe is a complete analysis pipeline for PAR-CLIP data providing the followin
     Annotation of reads, groups, and cluster
     Meta-analysis of binding sites relative to important transcript features
 
+
+PARpipe is housed at github:
+
+https://github.com/ohlerlab/PARpipe
+
+We have provided support for both human and mouse datasets and it can be modified for other organisms. The github already repository includes PARalyzerv1.5. Additionally we provide an  script "setup.sh" in the github repository that will automatically download all necessary accesory files for human hg19 and/or mouse mm10 genomes and put these files in the proper location. These include bowtie genome indices, .2bit genomes, and annotation (gencode and repeat)...Alternatively, the user can prepare this on their own.
+
 PARpipe has the following software dependencies (bpipe, bedtools, samtools, cutadapt, and bowtie (not bowtie2), perl, R, java).
--Users can either add the executable to their path or specify the path at the top of the parpipe.sh script.
--You may need to modify the adapter sequence in parclip_pipe.sh appropriately
--We have a wrapper file to specify this on the fly - let me know if it woks for you (it is called wrap.pl)
+-Users msut either add the executable to their path or specify the path at the top of the parpipe.sh script.
+-You may need to modify the adapter sequence in parclip_pipe.sh appropriately.
+-We have a wrapper file to specify this on the fly - let me know if it woks for you (it is called wrap.pl).
 -The necessary R and perl libraries that come packaged with PARpipe. Though one would need to modify the PERL5LIB path appropriately if the needed libraries are not already installed.
 It has been tested on linux systems. There may be difficulties on mac os/x.
 
