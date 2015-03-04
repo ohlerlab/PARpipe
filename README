@@ -35,7 +35,8 @@ bash setup.sh -s <h|m|hm>
 
 # To test PARpipe, go to the PARpipe/test directory
 cd test
-bpipe run -r ../parclip_pipe.sh RBPofInterest.fastq
+bpipe run -r ../parclip_pipe.sh test.fastq
+
 #to remove unnecessary intermediates:
 bpipe preserve *.csv *.bed *.distribution *.bam *.bam.bai *.clusters.txt *ini *pdf
 bpipe cleanup -y
