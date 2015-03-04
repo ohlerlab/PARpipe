@@ -28,6 +28,7 @@ then
 	mkdir test
 	cd test
 	curl -O https://ohlerlab.mdc-berlin.de/files/PARpipe/test/test.fastq.gz
+	gunzip test.fastq.gz
 	cd ../
 fi
 
