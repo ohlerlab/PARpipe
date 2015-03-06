@@ -1,7 +1,7 @@
 #!/bin/bash
 
-USAGE="Usage:  bash $0 -s <h|m|hm>\n
-h = human, m = mouse, hm = human and mouse"
+USAGE="Usage:  bash $0 -s <h|m|b>\n
+h = human, m = mouse, b = human and mouse"
 
 [ $# -eq 0 ] && { echo -e $USAGE;exit 0; }
 while getopts ho:s: OPT; do
@@ -64,7 +64,7 @@ if [ ${SPECIES} = "h" ];
 		tar -xvf mm10_repeat_download.tar.gz
 		echo "done"
 
-	elif [ ${SPECIES} = "hm" ];
+	elif [ ${SPECIES} = "b" ];
 	then
 		cd files
 
@@ -84,7 +84,7 @@ if [ ${SPECIES} = "h" ];
 		tar -xvf hg19_repeat_download.tar.gz
 		echo "done"
 
-	else [ ${SPECIES} != "h" ] || [ ${SPECIES} != "m" ] || [ ${SPECIES} != "hm" ] ;
+	else [ ${SPECIES} != "h" ] || [ ${SPECIES} != "m" ] || [ ${SPECIES} != "b" ] ;
 
 	echo -e $USAGE;
 	exit 0;

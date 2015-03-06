@@ -19,7 +19,7 @@ $annot{"start_codon"} = 4;
 $annot{"stop_codon"} = 5;
 my $regex = qr/.*(utr|coding|intron)-.*(utr|coding|intron)/;
 $annot{$regex} = 6;
-open(GTF, "grep -P '^\\w*\\t\\w*\\tgene\\t' $ARGV[1] |");
+open(GTF, "pgrep '^\\w*\\t\\w*\\tgene\\t' $ARGV[1] |");
 while(<GTF>){
  chomp;
  $_ =~ /gene_name "([^"]*)"/;

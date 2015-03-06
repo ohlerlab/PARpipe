@@ -5,19 +5,29 @@ PARpipe is a complete analysis pipeline for PAR-CLIP data providing the followin
     Annotation of reads, groups, and cluster
     Meta-analysis of binding sites relative to important transcript features
 
-
-PARpipe is housed at github:
-
+PARpipe is housed at github and the Ohler lab website:
 https://github.com/ohlerlab/PARpipe
+https://ohlerlab.mdc-berlin.de/software/PARpipe_119/
 
-We have provided support for both human and mouse datasets and it can be modified for other organisms. The github already repository includes PARalyzerv1.5. Additionally we provide an  script "setup.sh" in the github repository that will automatically download all necessary accesory files for human hg19 and/or mouse mm10 genomes and put these files in the proper location. These include bowtie genome indices, .2bit genomes, and annotation (gencode and repeat)...Alternatively, the user can prepare this on their own.
+We have provided support for both human and mouse datasets and it can be modified for other organisms.
 
-PARpipe has the following software dependencies (bpipe, bedtools, samtools, cutadapt, and bowtie (not bowtie2), perl, R, java).
--Users msut either add the executable to their path or specify the path at the top of the parpipe.sh script.
--You may need to modify the adapter sequence in parclip_pipe.sh appropriately.
--We have a wrapper file to specify this on the fly - let me know if it woks for you (it is called wrap.pl).
--The necessary R and perl libraries that come packaged with PARpipe. Though one would need to modify the PERL5LIB path appropriately if the needed libraries are not already installed.
-It has been tested on linux systems. There may be difficulties on mac os/x.
+The github repository includes PARalyzerv1.5.
+We provide an  script "setup.sh" in the github repository that will automatically download all necessary accesory files for human hg19 and/or mouse mm10 genomes and put these files in their proper location. These include bowtie genome indices, .2bit genomes, and annotation (gencode and repeat)...
+Alternatively, the user can prepare their own files (See "GTF Requirements" below).
+
+PARpipe has been tested on linux systems. There may be difficulties on mac os/x.
+
+It has the following software dependencies (version known to be compatible), for which users must either add the executable to their path or specify the path at the top of the parpipe.sh script.
+Bpipe (0.9.8.5)
+Bowtie (0.12.7)
+SAMtools (0.1.17)
+BEDtools (v2.20.1)
+cutadapt (1.3) 
+
+-Users must either add the executable to their path or specify the path at the top of the parpipe.sh script.
+-User may need to modify the adapter sequence in parclip_pipe.sh appropriately.
+-We have a wrapper file to specify this on the fly - let me know if it works for you (it is called wrap.pl).
+-Necessary R and perl libraries that come packaged with PARpipe. One may need to modify the PERL5LIB path appropriately, if the needed libraries are not already installed locally.
 
 
 QUICK START (in this case it will be installed in the home directory)
@@ -30,8 +40,9 @@ git clone https://github.com/ohlerlab/PARpipe.git
 cd PARpipe
 
 # If you want to download all necessary files for analysis of human -hg19 and/or mouse -mm10 data (this is all we support at the moment)
-bash setup.sh -s <h|m|hm>
-# h = human, m = mouse, hm = human and mouse
+# bash setup.sh -s <h|m|b>
+# h = human, m = mouse, b = human and mouse
+bash setup.sh -s h
 
 # To test PARpipe, go to the PARpipe/test directory
 cd test
@@ -83,3 +94,21 @@ Med: median of that statistic for all sites for that gene
 5'utr/Intron/Exon/3'utr/Start_codon/Stop_codon: number of sites mapping to that annotation category
 Junction: number of sites mapping to a junction between categories (coding-intron, coding-3'utr, etc.)
 GeneType: as described in the gene_type category for this gene in the .gtf file used
+
+
+
+GTF Requirements -> if the user wants to create their own GTF
+Must be tab-delimited
+The eighth column must contain, as non-tab-delimited:
+gene_type "<gene type>"
+transcript_type "<transcript type>"
+transcript_id "<transcript ID>"
+gene_name "<gene name>"
+transcript_status "<transcript status>", which must be KNOWN to be used
+third column must contain feature type as gene, transcript, exon, start_codon, stop_codon, UTR
+second column must contain annotation source
+fourth column must be start (lower number) position
+fifth column must be end (higher number) position
+seventh column must be strand (+/-)
+start and end locations must be inclusive
+
