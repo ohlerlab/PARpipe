@@ -9,7 +9,8 @@ print "Chr,Strand,Start,End,mismatch,alignment,readID,count,copy,length,seq,end_
 my @data = ();
 while(<USRFL>) {
 
-	chomp $_;
+	chomp;
+	chop($_) if ($_ =~ m/\r$/);
 	my @line = split(/\t/, $_);
 	if ($line[1] == 4){
 		next;

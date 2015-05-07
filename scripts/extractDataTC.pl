@@ -71,7 +71,8 @@ for (my $i = 0; $i <= $#head; ++$i){
  }
 }
 while (<IN>){
- chomp $_;
+ chomp;
+ chop($_) if ($_ =~ m/\r$/);
  @read = split(',', $_);
  $readSummary{$read[$order[0]]}{'reads'} += $read[$order[3]];
  $readSummary{$read[$order[0]]}{$read[$order[1]]} += $read[$order[3]];
@@ -122,7 +123,8 @@ for (my $i = 0; $i <= $#head; ++$i){
  }
 }
 while (<IN>){
- chomp $_;
+ chomp;
+ chop($_) if ($_ =~ m/\r$/);
  @cluster = split(',', $_);
  $clusterSummary{$cluster[$order[0]]}{'clusters'}++;
  $clusterSummary{$cluster[$order[0]]}{'T2CF'} += $cluster[$order[1]];
@@ -167,7 +169,8 @@ for (my $i = 0; $i <= $#head; ++$i){
  }
 }
 while (<IN>){
- chomp $_;
+ chomp;
+ chop($_) if ($_ =~ m/\r$/);
  @group = split(',', $_);
  $groupSummary{$group[$order[0]]}{'groups'}++;
  $groupSummary{$group[$order[0]]}{'T2CF'} += $group[$order[1]];

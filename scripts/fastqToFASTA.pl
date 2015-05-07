@@ -8,7 +8,8 @@ version if $option eq "-v" or $option eq "--version";
 my $lines = 0;
 
 while(<STDIN>) {
-	chomp $_;
+	chomp;
+	chop($_) if ($_ =~ m/\r$/);
 	$lines++;
 	if( /^\@/ ) { $ac = substr($_, 1); $x = 1;}
 	elsif( /\w/ && $x == 1 ) {

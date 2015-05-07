@@ -7,7 +7,9 @@ my $option = $ARGV[0];
 version if $option eq "-v" or $option eq "--version";
 
 while(<STDIN>) {
-	chomp $_;
+	chomp;
+	chop($_) if ($_ =~ m/\r$/);
+	chomp;
 	if( not /^>/ and /\w/ ) { $count{$_}++; }
 }
 

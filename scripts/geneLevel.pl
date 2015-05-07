@@ -19,9 +19,10 @@ $annot{"start_codon"} = 4;
 $annot{"stop_codon"} = 5;
 my $regex = qr/.*(utr|coding|intron)-.*(utr|coding|intron)/;
 $annot{$regex} = 6;
-open(GTF, "pgrep '^\\w*\\t\\w*\\tgene\\t' $ARGV[1] |");
+open(GTF, "grep '^\\w*\\t\\w*\\tgene\\t' $ARGV[1] |");
 while(<GTF>){
  chomp;
+ chop($_) if ($_ =~ m/\r$/);
  $_ =~ /gene_name "([^"]*)"/;
  my $genna = $1;
  $_ =~ /gene_type "([^"]*)"/;
@@ -54,6 +55,7 @@ for (my $i = 0; $i <= $#secs; ++$i){
 }
 while(<IN>){
  chomp;
+ chop($_) if ($_ =~ m/\r$/);
  my @secs = split ",";
  if ($secs[$order[0]] eq ""){
   next;

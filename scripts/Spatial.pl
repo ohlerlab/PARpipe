@@ -31,6 +31,7 @@ for ($i = 0; $i <= $#ARGV; ++$i){
   open(RS, $rseq);
   while(<RS>){
    chomp;
+   chop($_) if ($_ =~ m/\r$/);
    my @secs = split;
    if ($secs[0] ne "tracking_id"){
     $trab{$secs[0]} = $secs[9];
@@ -1112,6 +1113,7 @@ else{
 }
 foreach (@gtf){
  chomp;
+ chop($_) if ($_ =~ m/\r$/);
  @secs = split("\t");
  if ($secs[0] =~ /\d*|Y|X|MT|chr.*/ and $secs[8] =~ /exon_number "*(\d*)"*/){
   push(@chr, $secs[0]);

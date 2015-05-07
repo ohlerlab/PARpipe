@@ -11,7 +11,8 @@ my $which = 1;
 my $cutoff = $ARGV[0];
 
 while(<STDIN>) {
-	chomp $_;
+	chomp;
+	chop($_) if ($_ =~ m/\r$/);
 	my @line = split(/\,/, $_);
 #	if($line[13] =~ /[35]\'utr|coding|intron/i) {
 #	my($gene, $reads, $conversions, $location, $motif) = ($line[15], $line[6], $line[10], $line[13], $line[16]);

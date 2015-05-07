@@ -66,6 +66,7 @@ for ($i = 0; $i <= $#ARGV; ++$i){
   open(RS, $rseq);
   while(<RS>){
    chomp;
+   chop($_) if ($_ =~ m/\r$/);
    my @secs = split;
    if ($secs[0] ne "tracking_id"){
     $trab{$secs[0]} = $secs[9];
@@ -113,7 +114,8 @@ if ($cluster){
   push(@order, (0, 0));
  }
  $secs = readline(RF);
- chomp $secs;
+ chomp($secs);
+ chop($secs) if ($secs =~ m/\r$/);
  my @secs = split(",", $secs);
  print($secs . ",Aligned to,GeneName,AnnotationSource\n");
  for (my $i = 0; $i <= $#secs; ++$i){
@@ -154,7 +156,8 @@ while (!eof(RF)){
    last;
   }
   $secs = readline(RF);
-  chomp $secs;
+  chomp($secs);
+  chop($secs) if ($secs =~ m/\r$/);
   if ($cluster){
    @secs = split(",", $secs);
    if ($bed12){
@@ -204,6 +207,7 @@ while (!eof(RF)){
  open(Y, $pri);
  while (<Y>){
   chomp;
+  chop($_) if ($_ =~ m/\r$/);
   if ($_ eq "lincRNA"){
    push(@anli, "lincRNA_exon");
    push(@anli, "lincRNA_intron");
@@ -233,6 +237,7 @@ while (!eof(RF)){
    $insert = 0;
   }
   chomp;
+  chop($_) if ($_ =~ m/\r$/);
   $_ =~ /gene_type "([^"]*)"/;
   my $genty = $1;
   $_ =~ /transcript_type "([^"]*)"/;
@@ -586,6 +591,7 @@ while (!eof(RF)){
     $insert = 0;
    }
    chomp;
+   chop($_) if ($_ =~ m/\r$/);
    $_ =~ /gene_name "([^"]*)"/;
    my $genna = $1;
    $_ =~ /transcript_status "([^"]*)"/;
@@ -634,7 +640,8 @@ while (!eof(RF)){
   my %rtype;
   open(INFO, $fn4);
   while(<INFO>){
-   chomp;
+   chomp($_);
+   chop($_) if ($_ =~ m/\r$/);
    @secs = split;
    if ($secs[0] ne "#repname"){
     $rtype{$secs[0]} = $secs[1];
@@ -677,6 +684,7 @@ while (!eof(RF)){
     $insert = 0;
    }
    chomp;
+   chop($_) if ($_ =~ m/\r$/);
    @secs = split;
    if ($clust ne $secs[3]){
     my $annu = 1001;
