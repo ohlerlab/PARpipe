@@ -18,7 +18,7 @@ for i in range(len(field)):
     order[3] = i
   elif re.search(r'ID$', field[i]):
     order[4] = i
-  elif re.search(r'T2Cfraction', field[i]):
+  elif re.search(r'ConversionSpecificity', field[i]):
     order[5] = i
 for line in sys.stdin:
   line = line.strip('\n')
